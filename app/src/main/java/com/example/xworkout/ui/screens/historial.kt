@@ -40,7 +40,7 @@ fun historialView(){
             ,modifier = Modifier.fillMaxSize()
                 .padding(15.dp).height(90.dp)) {
             Spacer(modifier = Modifier.padding(10.dp))
-            Text(text = "Historial de rutinas", color = Color.Red,
+            Text(text = "Historial de rutinas ", color = Color.Red,
                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                 fontSize = 25.sp)
 

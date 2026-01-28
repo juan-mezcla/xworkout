@@ -66,7 +66,7 @@ fun perfilView(){
                             .padding(start = 20.dp)
                             .wrapContentHeight()) {
 
-                        Text(text = "X-WORKOUTPerfil", color = Color.Red,
+                        Text(text = "X-WORKOUTPerfil ", color = Color.Red,
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
 
                         Spacer(modifier = Modifier.height(10.dp))

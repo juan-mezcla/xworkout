@@ -16,7 +16,7 @@ fun generadorRutina(tipo: String) {
         Box(
             modifier = Modifier.fillMaxSize()
         ){
-            Text(text = "$tipo", modifier = Modifier.padding(16.dp))
+            Text(text = "$tipo aa", modifier = Modifier.padding(16.dp))
 
         }
 

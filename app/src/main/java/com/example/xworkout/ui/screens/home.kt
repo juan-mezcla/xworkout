@@ -43,7 +43,7 @@ fun homeView(navController: NavHostController) {
 
     ) {
         Text(
-            text = "X-WORKOUT",
+            text = "X-WORKOUT ",
             fontSize = 35.sp,
             fontWeight = FontWeight.Black,
             modifier = Modifier.padding(top = 50.dp),

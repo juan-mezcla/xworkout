@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -37,74 +38,86 @@ import com.example.xworkout.ui.navigation.Routes
 fun homeView(navController: NavHostController) {
     var categoriaSeleccionada by remember { mutableStateOf("PUSH") }
     var tipoRutina by rememberSaveable { mutableStateOf("PUSH") }
-    Column(
+    LazyColumn (
         modifier = Modifier.fillMaxSize().background(Color.DarkGray),
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        Text(
-            text = "X-WORKOUT ",
-            fontSize = 35.sp,
-            fontWeight = FontWeight.Black,
-            modifier = Modifier.padding(top = 50.dp),
-            color = Color.Red
-        )
-        Spacer(modifier = Modifier.height(40.dp))
+        item {
 
 
-        Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
-            val opciones = listOf("PUSH", "PULL", "LEGS", "FULL")
+            Text(
+                text = "X-WORKOUT ",
+                fontSize = 35.sp,
+                fontWeight = FontWeight.Black,
+                modifier = Modifier.padding(top = 50.dp),
+                color = Color.Red
+            )
+            Spacer(modifier = Modifier.height(40.dp))
 
-            opciones.forEach { nombre ->
 
-                val esSeleccionado = (categoriaSeleccionada == nombre)
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                val opciones = listOf("PUSH", "PULL", "LEGS", "FULL")
 
+                opciones.forEach { nombre ->
+
+                    val esSeleccionado = (categoriaSeleccionada == nombre)
+
+                    Text(
+                        text = nombre,
+                        color = Color.White,
+                        fontWeight = if (esSeleccionado) FontWeight.ExtraBold else FontWeight.Normal,
+                        modifier = Modifier
+                            .border(
+                                width = 2.dp,
+                                color = if (esSeleccionado) Color.Red else Color.Transparent,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .background(
+                                color = if (esSeleccionado) Color.DarkGray else Color.Gray,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            // 2. Aquí añadimos el evento de CLIC
+                            .clickable {
+                                categoriaSeleccionada = nombre
+                                tipoRutina = nombre
+                            }
+                            .padding(horizontal = 15.dp, vertical = 8.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(180.dp))
+
+            Button(
+                onClick = {
+                    navController.navigate(Routes.Rutinas.route + "?tipoRutina=$categoriaSeleccionada")
+                },
+                modifier = Modifier
+                    .size(200.dp)
+                    .shadow(
+                        elevation = 25.dp,
+                        shape = CircleShape,
+                        ambientColor = Color.Red,
+                        spotColor = Color.Red
+                    ),
+                shape = CircleShape,
+                border = BorderStroke(2.dp, Color.Black),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
+                    contentColor = Color.Red
+                )
+            ) {
                 Text(
-                    text = nombre,
-                    color = Color.White,
-                    fontWeight = if (esSeleccionado) FontWeight.ExtraBold else FontWeight.Normal,
-                    modifier = Modifier
-                        .border(
-                            width = 2.dp,
-                            color = if (esSeleccionado) Color.Red else Color.Transparent,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .background(
-                            color = if (esSeleccionado) Color.DarkGray else Color.Gray,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        // 2. Aquí añadimos el evento de CLIC
-                        .clickable {
-                            categoriaSeleccionada = nombre
-                            tipoRutina=nombre
-                        }
-                        .padding(horizontal = 15.dp, vertical = 8.dp)
+                    text = "X",
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Black,
+                    color = Color.White
                 )
             }
-        }
-
-        Spacer(modifier = Modifier.height(180.dp))
-
-        Button(
-            onClick = {
-                navController.navigate(Routes.Rutinas.route + "?tipoRutina=$categoriaSeleccionada")
-            },
-            modifier = Modifier
-                .size(200.dp)
-                .shadow(
-                    elevation = 25.dp,
-                    shape = CircleShape,
-                    ambientColor = Color.Red,
-                    spotColor = Color.Red
-                ),
-            shape = CircleShape,
-            border = BorderStroke(2.dp, Color.Black),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red,
-                contentColor = Color.Red
-            )
-        ) {
-            Text(text = "X", fontSize = 40.sp, fontWeight = FontWeight.Black, color = Color.White)
         }
     }
 }

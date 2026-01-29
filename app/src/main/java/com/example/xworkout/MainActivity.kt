@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -65,7 +66,10 @@ fun MenuBotton(navigationController: NavController) {
         Routes.Perfil
     )
 
-    NavigationBar {
+    NavigationBar(
+        containerColor = Color.Black, // Aquí cambias el fondo
+        contentColor = Color.White,   // Color de los elementos (opcional)
+        tonalElevation = 8.dp) {
         val navBackStackEntry by navigationController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
@@ -88,7 +92,14 @@ fun MenuBotton(navigationController: NavController) {
                     }
                 },
                 icon = { Icon(painter = painterResource(id = pantalla.icono), contentDescription = null) },
-                label = { Text(text = pantalla.titulo) }
+                label = { Text(text = pantalla.titulo) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = Color.Black,
+                    unselectedIconColor = Color.White,
+                    selectedTextColor = Color.White,
+                    unselectedTextColor = Color.Gray,
+                    indicatorColor = Color.White
+                )
             )
         }
     }

@@ -23,6 +23,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -107,13 +109,25 @@ fun perfilView(){
                         .padding(10.dp)) {
 
                     Text(text = "SETTINGS", color = Color.White)
+                    val equipos = remember {
+                        mutableStateListOf(
+                            EquipoEstado("Barra de dominadas"),
+                            EquipoEstado("Anillas de gimnasia"),
+                            EquipoEstado("Paralelas altas"),
+                            EquipoEstado("Paralelas bajas"),
+                            EquipoEstado("Chaleco de peso")
+                        )
+                    }
 
-                    FilaSettings("Barra de dominadas",false,{})
-                    FilaSettings("Anillas de gimnasia",false,{})
-                    FilaSettings("paralelas altas",false,{})
-                    FilaSettings("paralelas bajas",false,{})
-                    FilaSettings("Barra de dominadas",false,{})
-
+                    equipos.forEachIndexed { index, equipo ->//index para saber en cual hacemos el cambio
+                        FilaSettings(
+                            label = equipo.nombre,
+                            isChecked = equipo.activo,
+                            onCheckedChange = { nuevoValor ->
+                                equipos[index] = equipo.copy(activo = nuevoValor)
+                            }
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -146,6 +160,11 @@ fun perfilView(){
     }
 }
 
+data class EquipoEstado(
+    val nombre: String,
+    val activo: Boolean = false
+)
+
 @Composable
 fun FilaSettings(
     label: String,
@@ -166,7 +185,8 @@ fun FilaSettings(
             colors = SwitchDefaults.colors(
                 checkedTrackColor = Color.Red,
                 checkedThumbColor = Color(0xFF1C1C1C)
-            )
+            ),
+
         )
     }
 }
